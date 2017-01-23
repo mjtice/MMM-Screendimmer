@@ -1,0 +1,22 @@
+{
+  "name": "MMM-Screendimmer",
+  "version": "0.1.0",
+  "description": "Set the dim level on the raspberry pi 7inch screen based on solar events.",
+  "main": "MMM-Screendimmer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjtice/MMM-Screendimmer.git"
+  },
+  "author": "M Tice",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mjtice/MMM-Screendimmer/issues"
+  },
+  "homepage": "https://github.com/mjtice/MMM-Screendimmer#readme",
+  "dependencies": {
+    "suncalc": "latest"
+  }
+}
