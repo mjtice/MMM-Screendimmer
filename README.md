@@ -38,12 +38,9 @@ To use this module, add the following configuration block to the modules array i
 ### Configuration options
 option | type | default | description
 --- | --- | --- | ---
-`sunrise` | `int` | 25 | top edge of the sun appears on the horizon.
-`sunriseEnd` | `int` | 120 | bottom edge of the sun touches the horizon.
-`solarNoon` | `int` | 120 | sun is in the highest position.
-`sunsetStart` | `int` | 90 | bottom edge of the sun touches the horizon.
-`sunset` | `int` | 25 | sun disappears below the horizon, evening civil twilight starts.
-`night` | `int` | 18 | dark enough for astronomical observations.
-`nightEnd` | `int` | 25 | morning astronomical twilight starts.
+`morning` | `int` | 25 | time between dawn and sunriseEnd.
+`day` | `int` | 120 | time between sunriseEnd and sunsetStart.
+`evening` | `int` | 90 | time between sunsetStart and dusk.
+`night` | `int` | 18 | time between dusk and dawn.
 `path_to_backlight` | `str` | '/sys/class/backlight/rpi_backlight/brightness' | where to write the backlight value.
 `query_interval` | `int` | 30000 | how frequently to query for the current solar position.

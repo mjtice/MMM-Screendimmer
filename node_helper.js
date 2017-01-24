@@ -15,26 +15,28 @@ module.exports = NodeHelper.create({
     try {
         if (typeof config.latitude === 'undefined') { throw "Missing latitude configuration"; }
         if (typeof config.longitude === 'undefined') { throw "Missing longitude configuration"; }
-        setInterval(function(){ 
-            var local_time = Date.now();
+        setInterval(function(){
+            var local_time = new Date;
             var sunrisePos = SunCalc.getTimes(local_time, config.latitude, config.longitude);
-            if (local_time >= sunrisePos['sunrise'] && local_time < sunrisePos['sunriseEnd']) {
-                self.writeBacklight(config.path_to_backlight,config.sunrise);
+            if (local_time >= sunrisePos['dawn'] && local_time < sunrisePos['sunriseEnd']) {
+                if (config.debug === true) { self.debug_log(local_time,'Entering time between dawn and sunriseEd'); }
+                self.writeBacklight(config.path_to_backlight,config.morning);
             }
-            if (local_time >= sunrisePos['sunriseEnd'] && local_time < sunrisePos['solarNoon']) {
-                self.writeBacklight(config.path_to_backlight,config.sunriseEnd);
+            if (local_time >= sunrisePos['sunriseEnd'] && local_time < sunrisePos['sunsetStart']) {
+                if (config.debug === true) { self.debug_log(local_time,'Entering time between sunriseEnd and sunsetStart'); }
+                self.writeBacklight(config.path_to_backlight,config.day);
             }
-            if (local_time >= sunrisePos['solarNoon'] && local_time < sunrisePos['sunsetStart']) {
-                self.writeBacklight(config.path_to_backlight,config.sunsetStart);
+            if (local_time >= sunrisePos['sunsetStart'] && local_time < sunrisePos['dusk']) {
+                if (config.debug === true) { self.debug_log(local_time, 'Entering time between sunsetStart and dusk'); }
+                self.writeBacklight(config.path_to_backlight,config.evening);
             }
-            if (local_time >= sunrisePos['sunset'] && local_time < sunrisePos['night']) {
-                self.writeBacklight(config.path_to_backlight,config.sunset);
-            }
-            if (local_time >= sunrisePos['night'] && local_time < sunrisePos['nightEnd']) {
-                self.writeBacklight(config.path_to_backlight,config.night);
-            }
-            if (local_time >= sunrisePos['nightEnd'] && local_time < sunrisePos['sunrise']) {
-                self.writeBacklight(config.path_to_backlight,config.nightEnd);
+            if (local_time >= sunrisePos['dusk']) {
+                var tomorrow = new Date();
+                var sunrisePos = SunCalc.getTimes(tomorrow.setDate(tomorrow.getDate() + 1), config.latitude, config.longitude);
+                 if (local_time < sunrisePos['dawn']) {
+                     if (config.debug === true) { self.debug_log(local_time,'Entering time between dusk and dawn'); }
+                     self.writeBacklight(config.path_to_backlight,config.night);
+                 }
             }
         }, config.query_interval);
     }
@@ -50,7 +52,13 @@ module.exports = NodeHelper.create({
           if(err) {
               throw(err);
           }
-      }); 
+      });
+  },
+
+  // Debug function
+  debug_log: function(local_time, message) {
+      var d = new Date(0);
+      console.log(d.setUTCSeconds(local_time / 1000) + ': MMM-Screendimmer: '+message);
   },
 
   //Subclass socketNotificationReceived received.

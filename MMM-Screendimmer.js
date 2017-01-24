@@ -3,13 +3,11 @@ Module.register("MMM-Screendimmer",{
     defaults: {
         path_to_backlight: '/sys/class/backlight/rpi_backlight/brightness',
         query_interval: 30000,
-        sunrise: 25, /*top edge of the sun appears on the horizon*/
-        sunriseEnd: 120, /*bottom edge of the sun touches the horizon*/
-        solarNoon: 120, /*sun is in the highest position*/
-        sunsetStart: 90, /*bottom edge of the sun touches the horizon*/
-        sunset: 25, /*sun disappears below the horizon, evening civil twilight starts*/
-        night: 18, /*dark enough for astronomical observations*/
-        nightEnd: 25, /*morning astronomical twilight starts*/
+        morning: 25,
+        day: 120,
+        evening: 90,
+        night: 18,
+        debug: false,
     },
 
    start: function() {
