@@ -30,7 +30,9 @@ To use this module, add the following configuration block to the modules array i
 {
     module: 'MMM-Screendimmer',
     config: {
-        // See below for configurable options
+        latitude: 34.0000,
+        longitude: -75.0000
+        // See below for additional configurable options
     }
 }
 ```
@@ -44,3 +46,6 @@ option | type | default | description
 `night` | `int` | 18 | time between dusk and dawn.
 `path_to_backlight` | `str` | '/sys/class/backlight/rpi_backlight/brightness' | where to write the backlight value.
 `query_interval` | `int` | 30000 | how frequently to query for the current solar position.
+`debug` | 'bool' | false | debugging flag
+`latitude` | 'float' | none | no default, will fail without your latitude/longitude in config.
+`longitude` | 'float' | none | no default, will fail without your latitude/longitude in config.
