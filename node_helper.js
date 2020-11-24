@@ -2,6 +2,7 @@
  * Module: MMM-Screendimmer
  */
 
+const NodeHelper = require("node_helper");
 var SunCalc = require('suncalc');
 var fs = require('fs');
 
